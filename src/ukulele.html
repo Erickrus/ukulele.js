@@ -1,0 +1,54 @@
+<html>
+	<head>
+		<title>ukulele.js</title>
+		<script src='waves.js'></script>
+		<script src='sound.js'></script>
+		
+		
+		<script src='instrument/noteUtil.js'></script>
+
+		<script src='instrument/ukuleleClassic.js'></script>
+		<script src='instrument/ukuleleChord.js'></script>
+		<script src='instrument/ukuleleString.js'></script>
+		<script src='instrument/ukulele.js'></script>
+
+		<script>
+		
+			function checkPosition() {
+				console.log(sounds[0].snd.currentTime);
+				if (sounds[0].snd.currentTime > 0.2) {
+					sounds[0].stop();
+				}
+			}
+			
+		    var sounds = [];
+			function init() {
+			    for (var i=0;i<4;i++) {
+					sounds.push(new Sound(waves["c"+i]));
+				}
+				//setInterval('checkPosition()', 10);
+			}
+			function playATone(c) {
+				var s = new Sound(waves[c]);
+				s.play();
+			}
+			function delayedTone(sndId) {
+				sounds[sndId].play();
+			}
+			
+			function playCord() {
+				n = 50;
+				setTimeout('delayedTone(0)', 1);
+				//setTimeout('delayedTone(1)', n*1);
+				//setTimeout('delayedTone(2)', n*2);
+				//setTimeout('delayedTone(3)', n*3);
+			}
+			
+		</script>
+	</head>
+	<body onload='ukulele.init()'>
+		<input type='button' value='playTone' onclick='javascript:playCord()'>
+		<canvas id='main'>
+		</canvas>
+	</body>
+</html>
