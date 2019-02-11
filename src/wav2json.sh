@@ -19,4 +19,11 @@ python3.5 wav2json.py wav/440_03.wav >> waves.js
 python3.5 wav2json.py wav/440_07.wav >> waves.js
 python3.5 wav2json.py wav/440_11.wav >> waves.js
 python3.5 wav2json.py wav/880_03.wav >> waves.js
-
+python3.5 wav2json.py wav/220_00.wav >> waves.js
+python3.5 wav2json.py wav/220_01.wav >> waves.js
+python3.5 wav2json.py wav/220_02.wav >> waves.js
+python3.5 wav2json.py wav/220_03.wav >> waves.js
+python3.5 wav2json.py wav/220_04.wav >> waves.js
+python3.5 wav2json.py wav/220_05.wav >> waves.js
+python3.5 wav2json.py wav/220_06.wav >> waves.js
+python3.5 wav2json.py wav/220_07.wav >> waves.js
