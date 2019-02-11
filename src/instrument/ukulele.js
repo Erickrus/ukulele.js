@@ -92,7 +92,7 @@ function Ukulele() {
 		
 		for (var i=0;i<noteTable.length;i++) {
 			var found = false;
-			for (var j=7;j<this.classic.wavNames.length;j++) {
+			for (var j=0;j<this.classic.wavNames.length;j++) {
 				for (var k=0;k<3;k++) {
 					if (this.classic.wavNames[j][k]==noteTable[i]) {
 						found= true;

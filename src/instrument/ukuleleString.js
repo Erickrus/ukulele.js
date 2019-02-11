@@ -25,7 +25,7 @@ function UkuleleString(pos, ukulele) {
 	}
 	
 	this.play = function(soundId) {
-		if (soundId>=7) {
+		if (soundId>=0) {
 			if (this.currentSoundId != -1) {
 				this.sounds[this.currentSoundId].stop();
 				this.sounds[this.currentSoundId].currentTime = 0;
