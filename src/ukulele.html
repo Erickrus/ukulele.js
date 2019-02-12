@@ -14,14 +14,40 @@
 
 		<script>	
 			function playCord() {
-				ukulele.playChordScript("major/C/8 minor/E/8 minor/A/4 major/G/4 major/F/8 major/C/8 minor/E/8 minor/A/4 major/G/4 ")
+				ukulele.playChordScript(document.getElementById("chords").value);
+			}
+			
+			function playSimplifiedNotes() {
+				// http://www.qupu123.com/puyou/jipu/p305768.html
+				ukulele.playSimplifiedScript(document.getElementById("scripts").value);
 			}
 			
 		</script>
 	</head>
 	<body onload='ukulele.init()'>
-		<input type='button' value='Play' onclick='javascript:playCord()'>
-		<canvas id='main'>
-		</canvas>
+		Please browse using laptop or pc. It doesnt work well with your mobile phone right now. <br/>
+		<a href="https://github.com/Erickrus/ukulele.js">Repository</a><br/>
+		<input type='text' style="width: 300px" id='chords' value = 'C~8 Em~8 Am~4 G~4 F~8 C~8 Em~8 Am~4 G~4' ><br/>
+		<input type='button' value='Play Chords' onclick='javascript:playCord()'> <br/>
+		<br/>
+		<br/>
+		How to use the simplified notes:<br/>
+		<table>
+			<tr>
+				<td><img src='img/3.png' width=24 height=32 /></td><td>3</td><td>&nbsp;&nbsp;&nbsp;</td>
+				<td><img src='img/+1.png'  width=24 height=32 /></td><td>+1</td><td>&nbsp;&nbsp;&nbsp;</td>
+				<td><img src='img/-7.png'  width=24 height=32 /></td><td>-7</td><td>&nbsp;&nbsp;&nbsp;</td>
+			</tr>			
+			<tr>
+				<td><img src='img/-7-.png'  width=24 height=32 /></td><td>-7-</td><td>&nbsp;&nbsp;&nbsp;</td>
+				<td><img src='img/7=.png'  /></td><td>7=</td><td>&nbsp;&nbsp;&nbsp;</td>
+				<td><img src='img/-5J.png'  width=24 height=32 /></td><td>-5#</td><td>&nbsp;&nbsp;&nbsp;</td>
+			</tr>
+		</table>
+		<br/>
+		Below is a demo:<br/>
+		http://www.qupu123.com/puyou/jipu/p305768.html <br/>
+		<input type='text' style="width: 300px" id='scripts' value = '-6- -7- 1 -7- 1 3 -7 # -3 -6 -5- -6 1 -5 # -3 -4 -3- -4- 1 -3 # 1 -7 -4#- -4# -7 -7 # -6- -7- 1 -7- 1 3 -7 # -3- -3- -6 -5- -6 1 -5 # -3 -4 1- -7 1 2 3- 1- 1 # 1- -7- -6 -7 -5# -6 # 1- 2- 3 2- 3 5 2 # -5 1 -7- 1 2- 3- 3 # -6- -7- 1 -7- 1- 2 1 -5- -5 # 4 3 2 1 3 # 3 6 6- 5 5- 3- 2- 1 1 # 2 1- 2 5 3 # 3 6 6- 5 5- 3- 2- 1 1 # 2 1- 2 -7 -6 #' ><br/>
+		<input type='button' value='Play Simplified Notes' onclick='javascript:playSimplifiedNotes()'> <br/>
 	</body>
 </html>
