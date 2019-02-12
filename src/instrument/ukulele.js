@@ -18,7 +18,7 @@ function Ukulele() {
 	};
 	
 	// https://www.guitarinstructor.com/product/ukulele/bruno-mars/count-on-me/1000188417
-	// ukulele.playChordScript("major/C/8 minor/E/8 minor/A/4 major/G/4 major/F/8 major/C/8 minor/E/8 minor/A/4 major/G/4 ")
+	// ukulele.playChordScript("C~8 Em~8 Am~4 G~4 F~8 C~8 Em~8 Am~4 G~4 ")
 	this.playChordScript = function(chordScript) {
 		var chordNotes = chordScript.split(" ");
 		var interval = 600;
@@ -26,12 +26,25 @@ function Ukulele() {
 		var backward = false;
 		
 		for (var i=0;i<chordNotes.length;i++) {
-			var chordNoteItems = chordNotes[i].split("/");
-			var mode = chordNoteItems[0];
-			var chordName = chordNoteItems[1];
-			var repetation = parseInt(chordNoteItems[2]);
-			for( var j=0;j<repetation;j++) {
-				
+			var chordNoteItems = chordNotes[i].split("~");
+			var mode = "major";
+			var chordName = chordNoteItems[0];
+			
+			var modeList = ["maj7", "m7", "7", "minor" ], modeAbrevList = ["maj7", "m7", "7", "m" ];
+			for (var j=0;j<modeAbrevList.length;j++) {
+				if (chordNoteItems[0].endsWith(modeAbrevList[j])) {
+					mode = modeList[j];
+					chordName = chordName.substring(0, chordName.length- modeAbrevList[j].length);
+					break;
+				}
+			}
+			
+			// set default repetition
+			var repetation = 1;
+			if (chordNoteItems.length > 1) {
+				repetation = parseInt(chordNoteItems[1]);
+			}
+			for (var j=0;j<repetation;j++) {
 				setTimeout('ukulele.playChord("'+mode+'", "'+chordName+'", '+backward+')', afterPeriod);
 				afterPeriod += interval;
 			}
@@ -51,53 +64,68 @@ function Ukulele() {
 				} else {
 					soundHead = "440";
 				}
+				
+				var tempo = 1;
+				if (simpNotes[i].endsWith("=")) {
+					tempo = 4;
+					simpNotes[i] = simpNotes[i].substring(0, simpNotes[i].length-1);
+				} else if (simpNotes[i].endsWith("-")) {
+					tempo = 2;
+					simpNotes[i] = simpNotes[i].substring(0, simpNotes[i].length-1);
+				}
+				
+				var toneOffset = 0;
+				if (simpNotes[i].endsWith("#")) {
+					simpNotes[i] = simpNotes[i].substring(0, simpNotes[i].length-1);
+					toneOffset = 1;
+				} else if (simpNotes[i].endsWith("b")) {
+					simpNotes[i] = simpNotes[i].substring(0, simpNotes[i].length-1);
+					toneOffset = -1;
+				}
+
 				var tone = Math.abs(parseInt(simpNotes[i]));
 				
 				//C,Db,D,Eb,E,F,Gb,G,Ab,A,Bb,B
 				switch(tone) {
 				  case 1:
-					tone = 0;
-					break;
+					tone = 0; break;
 				  case 2:
-					tone = 2;
-					break;
+					tone = 2; break;
 				  case 3:
-					tone = 4;
-					break;
+					tone = 4; break;
 				  case 4:
-					tone = 5;
-					break;
+					tone = 5; break;
 				  case 5:
-					tone = 7;
-					break;
+					tone = 7; break;
 				  case 6:
-					tone = 9;
-					break;
+					tone = 9; break;
 				  case 7:
-					tone = 11;
-					break;
+					tone = 11; break;
 				}
 				
 				if (tone<=9) {
-					tone = "0"+tone;
+					tone = "0"+(tone+toneOffset);
 				} else {
-					tone = ""+tone
+					tone = ""+(tone+toneOffset);
 				}
 				
 				noteTable.push(soundHead+"_"+tone);
+				noteTable.push(tempo);
+				
 			}
 		}
 		var interval = 500;
 		var afterPeriod = 0;
 		
-		for (var i=0;i<noteTable.length;i++) {
+		for (var i=0;i<noteTable.length;i+=2) {
 			var found = false;
 			for (var j=0;j<this.classic.wavNames.length;j++) {
 				for (var k=0;k<3;k++) {
 					if (this.classic.wavNames[j][k]==noteTable[i]) {
 						found= true;
 						setTimeout('ukulele.strings['+k+'].play('+j+')', afterPeriod);
-						afterPeriod += interval;
+						var tempo = noteTable[i+1];
+						afterPeriod += interval / tempo;
 						break
 					};
 				}
