@@ -13,8 +13,9 @@ function UkuleleString(pos, ukulele) {
 			if (waveNames.indexOf(currWaveName)>=0) {
 				var sound = new Sound(waves[currWaveName]);
 				sound.snd.pos = this.pos;
-				sound.snd.addEventListener('ended', function (){
+				sound.snd.addEventListener('ended', function () {
 					ukulele.strings[this.pos].currentSoundId=-1;
+					ukulele.strings[this.pos].onStringStop();
 					}
 				);
 				this.sounds.push(sound);
@@ -23,7 +24,12 @@ function UkuleleString(pos, ukulele) {
 			}
 		}
 	}
-	
+	this.onStringStart = function() {
+		console.log("String"+pos+" starts");
+	};
+	this.onStringStop = function() {
+		console.log("String"+pos+" stops");
+	};
 	this.play = function(soundId) {
 		if (soundId>=0) {
 			if (this.currentSoundId != -1) {
@@ -34,6 +40,7 @@ function UkuleleString(pos, ukulele) {
 			this.sounds[soundId].currentTime = 0;
 			this.sounds[soundId].play();
 			this.currentSoundId = soundId;
+			this.onStringStart();
 		} else {
 			this.currentSoundId = -1;
 		}
