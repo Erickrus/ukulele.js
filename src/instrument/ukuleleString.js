@@ -25,10 +25,10 @@ function UkuleleString(pos, ukulele) {
 		}
 	}
 	this.onStringStart = function() {
-		console.log("String"+pos+" starts");
+		console.log("String"+this.pos+" starts");
 	};
 	this.onStringStop = function() {
-		console.log("String"+pos+" stops");
+		console.log("String"+this.pos+" stops");
 	};
 	this.play = function(soundId) {
 		if (soundId>=0) {
